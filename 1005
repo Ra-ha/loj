@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+int N,R;
+int dp[31][31][31*31];
+int ns(int r,int c,int b)
+{
+     if(r<1||c<1)return 0;
+    if(b==1)return r*c;
+        if(b==0)return 1;
+    int x=0;
+    int &ret =dp[r][c][b];
+    if(ret!=-1)return ret;
+    for(int i=1; i<=c; i++)
+        for(int j=1; j<=r; j++)
+            x+=ns(r-j,c-1,b-1);
+    return ret=x;
+}
+int32_t main()
+{
+    memset(dp,-1,sizeof dp);
+    int t,i=0;
+    scanf("%lld",&t);
+    while(t--)
+    {      scanf("%lld %lld",&N,&R);
+        printf("Case %lld: %lld\n",++i,ns(N,N,R));
+    }
+    return 0;
+}
