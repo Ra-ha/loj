@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define F first
+#define S second
+int n,k;
+int lc[110],rs[110],w[110];
+int dp[110][110];
+vector< pair<int, int> >v[100+10];
+void dfs0(int u,int p)
+{
+    int z;
+    for(auto x: v[u])
+    {
+        if(x.F==p)continue;
+        dfs0(x.F,u);
+        if(!lc[u]) lc[u]=x.F;
+        else rs[z]=x.F;
+        z=x.F;
+        w[x.F]=x.S;
+
+    }
+}
+int dfs(int x,int exp)
+{
+    if(!x) return 0;
+    if(~dp[x][exp]) return dp[x][exp];
+    int res1=1+dfs(lc[x],k)+dfs(rs[x],exp);
+
+     int need=exp-w[x];
+  for(int i=0;i<=need;i++)
+    {
+
+        res1=min( res1,dfs(lc[x], i )+dfs(rs[x],need-i));
+
+    }
+    return dp[x][exp]=res1;
+
+}
+int main()
+{
+    int t,tc=1;
+    scanf("%d",&t);
+    while(t--){
+       memset(dp,-1,sizeof dp);
+   scanf("%d %d",&n,&k);
+   for(int i=0;i<=n;i++)v[i].clear();
+   for(int i=1;i<n;i++)
+   {
+       int x,y,z;
+       scanf("%d %d %d",&x,&y,&z);
+       v[x].push_back({y,z});
+       v[y].push_back({x,z});
+   }
+   memset(rs,0,sizeof rs);
+   memset(lc,0,sizeof rs);
+     w[1]=0;
+    dfs0(1,-1);
+
+    printf("Case %d: %d\n",tc++,1+dfs(1,k));
+
+    }
+
+}
