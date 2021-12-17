@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+int  a[100001];
+int mn[100001*3];
+void divide(int n,int b,int e)
+{
+    if(b==e)
+    {
+        mn[n]=a[b];
+        return ;
+    }
+
+   divide(2*n,b,(b+e)/2);
+   divide(2*n+1,(b+e)/2+1,e);
+   mn[n]=min(mn[2*n],mn[2*n+1]);
+}
+int query(int n,int b,int e,int i,int j)
+{
+    if(b>j||e<i)   return INT_MAX;
+    if(b>=i&& e<=j) return mn[n];
+    return min(query(2*n,b,(b+e)/2,i,j),query(2*n+1,(b+e)/2+1,e,i,j));
+}
+int main()
+{
+    int T,N,n,x,y,q;
+    scanf("%d",&T);
+    for(int t=1; t<=T; t++)
+    {
+
+        scanf("%d %d",&N,&n);
+        for(int i=1; i<=N; i++)scanf("%d",&a[i]);
+
+        printf("Case %d:\n",t);
+        divide(1,1,N);
+
+        for(int i=0; i<n; i++)
+        {
+
+            scanf("%d %d",&x,&y);
+            q=query(1,1,N,x,y);
+            printf("%d\n",q);
+        }
+    }
+    return 0;
+}
