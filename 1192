@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+
+int main()
+{
+     int t,x,y,tt=1;
+     scanf("%d",&t);
+     while(t--)
+     {
+            int _xor=0;
+        scanf("%d",&n);
+
+        for(int i=1;i<=n;i++){scanf("%d %d",&x,&y);
+             _xor ^= (y-x-1);
+         }
+         printf("Case %d: ",tt++);
+        if(_xor==0) printf("Bob\n");
+        else printf("Alice\n");
+     }
+}
