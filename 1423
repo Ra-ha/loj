@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+using namespace std;
+unsigned long long fnv(vector<int>v)
+{
+    unsigned long long os=2166136261U;
+    for(int i=1;i<v.size();i++)
+    {
+        os=( os * 16777619U) ^ v[i];
+    }
+    return os;
+}
+int ans( vector< pair< unsigned long long, int> > v)
+{
+    int mx=0,pr=v[0].second;
+     unsigned long long prv=v[0].first;
+     for(int i=1;i<v.size();i++)
+     {
+         if(prv==v[i].first) mx= max(mx, v[i].second-pr );
+         else prv=v[i].first,pr=v[i].second;
+     }
+     return mx;
+}
+int main()
+{
+
+    int t;
+    scanf("%d",&t);
+   for(int tc=1;tc<=t;tc++)
+   {
+       int n,k;
+       scanf("%d %d",&n,&k);
+       vector< vector<int> > v(n+1,vector<int>(k+1));
+       for(int i=1;i<=k;i++)
+       {
+           int x;scanf("%d", &x);
+           int y;
+           while(x--) scanf("%d",&y),v[y+1][i]=1;
+       }
+
+       vector< pair< unsigned long long, int> > F;
+       F.push_back({fnv(v[0]),0});
+       int mx[n+1];
+       memset(mx,0,sizeof mx);
+       for(int i=1;i<=n;i++)
+       {
+
+           for(int j=1;j<=k;j++)
+           {
+               v[i][j]+=v[i-1][j];
+               mx[i]=max(mx[i], v[i ][j]);
+           }
+
+
+
+       }
+for(int i=1;i<=n;i++)
+       {
+
+           for(int j=1;j<=k;j++)
+           {
+              v[i][j]=mx[i]-v[i][j];
+
+           }
+       //     for(int x: v[i]) cout<<x<<' ';
+           F.push_back({fnv(v[i]),i});
+        //   cout<<endl;
+       }
+       sort(F.begin(),F.end());
+     //  for( auto x: F)cout<<x.first<<" "<<x.second<<endl;
+       printf("Case %d: %d meter(s)\n",tc,ans(F));
+
+   }
+}
