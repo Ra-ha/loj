@@ -1,0 +1,37 @@
+/* T33 */
+#include<bits/stdc++.h>
+using namespace std;
+int n,k;
+int a[50+2],b[50+5],d[60][2000+1];
+int m=100000007;
+int ns(int i,int amount)
+{
+    if(i>=n)
+    {
+        if(amount==k) d[i][amount]=1;
+        else  d[i][amount]=0;
+        return d[i][amount];
+
+    }
+    if(d[i][amount]!=-1) return d[i][amount];
+         int x=0;
+       for(int j=0;j<=b[i] && amount+j*a[i]<=k;j++)
+       {
+          x+= ns( i+1  ,amount+j*a[i] );
+          x=x%m;
+       }
+     return d[i][amount]=x;
+}
+int main()
+{
+    int T;
+   scanf("%d",&T);
+   for(int t=1;t<=T;t++){
+    scanf("%d %d",&n,&k);
+    for(int i=0;i<n;i++)scanf("%d",&a[i]);
+    for(int i=0;i<n;i++)scanf("%d",&b[i]);
+    memset(d,-1,sizeof(d));
+    printf("Case %d: %d\n",t,ns(0,0));
+    }
+    return 0;
+}
