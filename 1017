@@ -1,0 +1,38 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+int n,w,kl,x,z;
+vector<int>v;
+int dp[110][110];
+int ns(int i,int j)
+{
+    if(i>=n||j>=kl)return 0;
+    if(dp[i][j]!=-1)return dp[i][j];
+    int x=0,y=0;
+    for(int k=i;k<n;k++)
+    {
+        if(v[k]==v[i]) y++;
+        if(v[k]-v[i]<=w)x++;
+        else break;
+    }
+    return dp[i][j]=max(  x+ns(i+x,j+1),ns(i+y,j)  );
+
+}
+int main()
+{  int T,t=1;cin>>T;
+   while(T--){
+    scanf("%d %d %d",&n,&w,&kl);
+    v.clear();
+    for(int i=0;i<n;i++)
+    {
+
+        scanf("%d %d",&z,&x);
+        v.push_back(x);
+    }
+    sort(v.begin(),v.end());
+    memset(dp,-1,sizeof dp);
+    printf("Case %d: %d\n",t++,ns(0,0));
+   }
+   // cout<<ns(0,0);
+
+}
