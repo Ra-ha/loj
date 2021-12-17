@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+#define ll long long
+using namespace std;
+int deg[1010];
+bool clr[1010];
+void dfs(int i,vector<int>v[])
+{
+    clr[i]=1;
+    deg[i]++;
+    for(int j=0;j<v[i].size();j++)
+    {
+        if(!clr[v[i][j]]) dfs(v[i][j],v);
+    }
+}
+int main()
+{
+   int k,n,m,a[110],x,y,T;
+   cin>>T;
+   for(int t=1;t<=T;t++){
+   //cin>>k>>n>>m;
+   scanf("%d %d %d",&k,&n,&m);
+   for(int i=1;i<=k;i++)
+   {
+       scanf("%d",&a[i]);
+   }
+   vector<int>v[n+2];
+   for(int i=0;i<m;i++)
+   {
+       scanf("%d %d",&x,&y);
+       v[x].push_back(y);
+   }
+   memset(deg,0,sizeof deg);
+   for(int j=1;j<=k;j++)
+   {
+       memset(clr,0,sizeof clr);
+       dfs(a[j],v);
+   }
+    int sum=0;
+    for(int i=1;i<=n;i++)
+    {
+        if(deg[i]>=k)sum++;
+    }
+
+    printf("Case %d: %d\n",t,sum);
+   }
+}
