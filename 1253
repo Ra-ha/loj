@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+int m,n;
+
+int main()
+{
+    int t,x,y,tt=1,sum;
+    scanf("%d",&t);
+    while(t--)
+    {
+        int _xor = 0, f = 0;
+        scanf("%d", &n);
+
+        for(int i = 1; i <= n; i++)
+        {
+                scanf("%d",&x);
+                if(x != 1) f = 1;
+            _xor ^= x;
+        }
+        printf("Case %d: ",tt++);
+
+        if(f == 0)
+        {
+           if(n % 2 == 0) _xor = 1;
+           else _xor = 0;
+        }
+        if(_xor == 0) printf("Bob\n");
+        else printf("Alice\n");
+    }
+}
