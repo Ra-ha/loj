@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+int p1,p2, tst;
+bool clr[200]={0};
+void dfs(int x,vector< pair<int ,pair<int,int> > > v[])
+{
+        tst=x;
+       clr[x]=1;
+    for(int i=0;i<v[x].size();i++)
+    {
+        if(clr[v[x][i].first]==0)
+        {
+                clr[x]=1;
+            p1+=v[x][i].second.first;p2+=v[x][i].second.second;
+            dfs(v[x][i].first,v);
+
+        }
+    }
+
+}
+int main()
+{
+
+    int n,t,x,y,c;
+    scanf("%d",&t);
+    for(int tt=1;tt<=t;tt++){
+            scanf("%d",&n);
+            memset(clr,0,sizeof clr);
+    //v.clear();
+   vector< pair<int ,pair<int,int> > >v[200];
+    int trump1,trump2;
+
+    for(int i=0;i<n;i++)
+    {
+       // cin>>x>>y>>c;
+          scanf("%d %d %d",&x,&y,&c);
+        v[x].push_back({y,{0,c} });
+        v[y].push_back({x,{c,0} });
+    }
+    p1=p2=0;
+    dfs(1,v);
+    sort(v[tst].begin(),v[tst].end()  );
+              p1+=v[tst][0].second.first;
+              p2+=v[tst][0].second.second;
+            printf("Case %d: %d\n",tt,min(p1,p2));
+    //cout<<min(p1,p2);
+    }
+
+}
