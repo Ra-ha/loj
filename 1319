@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    long long t,n,a[100],b[100];
+    scanf("%lld",&t);
+    int i=1;
+    while(t--)
+    {
+        scanf("%lld",&n);
+        long long M=1;
+         for(int j=0;j<n;j++)
+         {
+             scanf("%lld %lld",&a[j],&b[j]);
+             M*=a[j];
+         }
+        // cout<<M<<" ";
+         long long  x=0,m1;
+         for(int j=0;j<n;j++)
+         {
+             m1=M/a[j];
+             long long m=m1,aj=a[j]-2;
+
+             m1=1;
+             while(aj--){ m1=m1*m; m1=m1%a[j];}
+            // m1=m1%a[j];
+
+             x+=m*b[j]*(m1%a[j]);
+
+       // cout<<x<<" ";
+         }
+
+         printf("Case %d: %lld\n",i++,x%M);
+    }
+    return 0;
+}
