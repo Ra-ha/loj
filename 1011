@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+int n,mat[17][17];
+int Set(int n,int i){return    (1<<i)|n;}
+bool Check(int n,int i){return  (bool)((1<<i)&n);}
+int dp[17][1<<16+2];
+int dfs(int boy,int mask)
+{
+    if(boy==n) return 0;
+    if(mask+1==1<<n) return 0;
+    int x=0;
+if(~dp[boy][mask])return dp[boy][mask];
+    for(int i=0;i<n;i++)
+    {
+        if(Check(mask,i)==0)
+        {
+            int tmp=mat[boy][i];
+            tmp+=dfs(boy+1,Set(mask,i));
+            x=max(tmp,x);
+        }
+    }
+    return dp[boy][mask]=x;
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int T;cin>>T;
+for(int t=0;t<T;t++){
+    cin>>n;
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+        cin>>mat[i][j];
+      memset(dp,-1,sizeof dp);
+    cout<<"Case "<<t+1<<": "<<dfs(0,0)<<"\n";
+}
+}
+
