@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool Check(int n,int i){ return (bool)((1<<i)&n);}
+int Set(int n,int i){return n|(1<<i);}
+int Reset(int n,int i){return n&(~(1<<i));}
+int n,mat[15][15],dp[1<<14+2];
+int dfs(int mask)
+{
+    if(mask+1==(1<<n)) return 0;
+    if(~dp[mask])return dp[mask];
+    int ans=INT_MAX;
+    for(int i=0;i<n;i++)
+    {
+        if(Check(mask,i)==0)
+        {
+            int p=mat[i][i];
+            for(int j=0;j<n;j++)
+            {
+                if(Check(mask,j)&&j!=i)p+=mat[i][j];
+            }
+            p=p+dfs(Set(mask,i));
+            ans=min(ans,p);
+        }
+    }
+    return dp[mask]=ans;
+}
+int main()
+{
+    int T;
+    cin>>T;
+   for(int t=1;t<=T;t++)
+   {
+       cin>>n;
+       for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+           cin>>mat[i][j];
+       memset(dp,-1,sizeof dp);
+       cout<<"Case "<<t<<": "<<dfs(0)<<endl;
+   }
+   return 0;
+}
